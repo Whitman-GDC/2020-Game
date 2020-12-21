@@ -15,10 +15,12 @@ public class PickUp : MonoBehaviour
 
     public Transform pickUpContainer;
 	public Transform environment;
-    public Transform player;
+    public GameObject player;
 
-	GameObject holding;
-    Vector3 holdingOriginalScale;
+	[HideInInspector] public GameObject holding;
+    int currentSlot = 0;
+
+    Inventory inventory;
 
     void Awake()
     {
@@ -26,9 +28,50 @@ public class PickUp : MonoBehaviour
         interactText.GetComponent<Text>().text = "Press F to pick up";
     }
 
-    // Update is called once per frame
-    void Update()
+	void Start()
+	{
+        inventory = player.GetComponent<Inventory>();
+	}
+
+	// Update is called once per frame
+	void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+		{
+            currentSlot = 0;
+		} else if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+            currentSlot = 1;
+		} else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            currentSlot = 2;
+        } else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            currentSlot = 3;
+        } else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            currentSlot = 4;
+        }
+
+        for (int i = 0; i < inventory.getInventoryItems().Length; i++)
+		{
+            if (inventory.getInventoryItems()[i] != null)
+			{
+                if (i != currentSlot)
+			    {
+                    inventory.getInventoryItems()[i].GetComponent<MeshRenderer>().enabled = false;
+                    inventory.getInventoryItems()[i].GetComponent<Rigidbody>().isKinematic = true;
+                    inventory.getInventoryItems()[i].GetComponent<Collider>().isTrigger = true;
+			    } else
+			    {
+                    inventory.getInventoryItems()[i].GetComponent<MeshRenderer>().enabled = true;
+                    inventory.getInventoryItems()[i].GetComponent<Rigidbody>().isKinematic = false;
+                    inventory.getInventoryItems()[i].GetComponent<Collider>().isTrigger = false;
+                }
+            }
+        }
+
+        holding = inventory.getInventoryItems()[currentSlot];
         Ray ray = gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
 		if (Physics.Raycast(ray, out RaycastHit hit, maxInteractableDistance, interactables))
 		{
@@ -36,11 +79,6 @@ public class PickUp : MonoBehaviour
 			interactText.SetActive(true);
             if (Input.GetButton("PickUp"))
 			{
-                if (holding)
-                {
-					// if player is already holding something, drop it first
-					Drop();
-				}
                 // pick up when the player presses the pickup key
                 PickUpObject(hit.collider.gameObject);
             }
@@ -67,28 +105,33 @@ public class PickUp : MonoBehaviour
 	}
 
     void PickUpObject(GameObject item)
-	{
+    {
         // set current holding item to object picked up
-        holding = item;
-        holdingOriginalScale = item.transform.localScale;
+        if (!inventory.addToInventory(item, currentSlot))
+		{
+            holding = inventory.getInventoryItems()[currentSlot];
+        }
 
-		// make the item a child of the pickup container and set it to default position
-		holding.transform.SetParent(pickUpContainer);
+        holding = item;
+
+        // make the item a child of the pickup container and set it to default position
+        holding.transform.SetParent(pickUpContainer);
         holding.transform.localPosition = Vector3.zero;
         holding.transform.localRotation = Quaternion.Euler(Vector3.zero);
         holding.transform.localScale = Vector3.one;
     }
 
-    void Drop()
+    public void Drop()
     {
-        // setting parent to null
+        // setting parent to environment
         holding.transform.SetParent(environment);
+        holding.transform.localScale = inventory.getOriginalScale(currentSlot);
 
         // add forces to throw away item
         holding.GetComponent<Rigidbody>().AddForce(transform.forward * dropForwardForce, ForceMode.Impulse);
         holding.GetComponent<Rigidbody>().AddForce(transform.up * dropUpwardForce, ForceMode.Impulse);
 
-        holding.transform.localScale = holdingOriginalScale;
         holding = null;
+        inventory.removeFromInventory(currentSlot);        
     }
 }
