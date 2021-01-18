@@ -6,72 +6,59 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
-    public CharacterController controller;
 
     public float moveSpeed = 12f;
     public float stealthSpeedMultiplier = 0.5f;
 
-    public float gravity = -9.81f;
-    public float jumpForce;
-    public Transform groundCheck;
+    public float jumpForce = 7f;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-
-    Vector3 velocity;
-    bool isGrounded;
+    private new CapsuleCollider collider;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        collider = GetComponent<CapsuleCollider>();
     }
+
     void Update()
     {
-        
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        float finalMoveSpeed = moveSpeed;
 
-        /*
-        if (isGrounded && velocity.y < 0)
-		{
-            velocity.y = -2f;
-		}
-        */
-        
+        if (Input.GetButton("Stealth"))
+        {
+            finalMoveSpeed *= stealthSpeedMultiplier;
+        }
+        else
+        {
+            finalMoveSpeed = moveSpeed;
+        }
+
         //input
-        float movementX = Input.GetAxisRaw("Horizontal") * moveSpeed;
-        float movementZ = Input.GetAxisRaw("Vertical") * moveSpeed;
+        float movementX = Input.GetAxisRaw("Horizontal") * finalMoveSpeed;
+        float movementZ = Input.GetAxisRaw("Vertical") * finalMoveSpeed;
 
         //movement
         Vector3 move = transform.right * movementX + transform.forward * movementZ;
         Vector3 newMove = new Vector3(move.x, rb.velocity.y, move.z);
 
-        rb.velocity = newMove;
-        
-        if(isGrounded)
-        {
-            Console.WriteLine("is grounded");
-        }
+        if (Input.GetKeyDown(KeyCode.Space))
+		{
+            Debug.Log("Space bar clicked");
+		}
+
         //jumping
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-        /*
-        float finalMoveSpeed = moveSpeed;
 
-        if (Input.GetButton("Stealth"))
-		{
-            finalMoveSpeed *= stealthSpeedMultiplier;
-		}
-		else
-		{
-            finalMoveSpeed = moveSpeed;
-		}
-
-        controller.Move(move * finalMoveSpeed * Time.deltaTime);
-
-        velocity.y += gravity * Time.deltaTime;
-
-        controller.Move(velocity * Time.deltaTime);
-        */
+        rb.velocity = newMove;
     }
+
+    private bool IsGrounded()
+	{
+        return Physics.CheckCapsule(collider.bounds.center, new Vector3(collider.bounds.center.x,
+            collider.bounds.min.y, collider.bounds.center.z), collider.radius * 0.9f, groundMask);
+	}
 }
