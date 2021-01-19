@@ -997,7 +997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 16
   stealthSpeedMultiplier: 0.6
-  jumpForce: 0
+  jumpForce: 10
   groundDistance: 0.4
   groundMask:
     serializedVersion: 2

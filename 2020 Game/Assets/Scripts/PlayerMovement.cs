@@ -42,13 +42,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * movementX + transform.forward * movementZ;
         Vector3 newMove = new Vector3(move.x, rb.velocity.y, move.z);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-		{
-            Debug.Log("Space bar clicked");
-		}
-
         //jumping
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
