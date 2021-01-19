@@ -42,13 +42,14 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * movementX + transform.forward * movementZ;
         Vector3 newMove = new Vector3(move.x, rb.velocity.y, move.z);
 
+        rb.velocity = newMove;
+
         //jumping
         if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
-        rb.velocity = newMove;
     }
 
     private bool IsGrounded()
@@ -56,4 +57,17 @@ public class PlayerMovement : MonoBehaviour
         return Physics.CheckCapsule(collider.bounds.center, new Vector3(collider.bounds.center.x,
             collider.bounds.min.y, collider.bounds.center.z), collider.radius * 0.9f, groundMask);
 	}
+
+    public void CaughtInWeb(float multiplier)
+    {
+        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * multiplier, rb.velocity.z);
+        moveSpeed *= multiplier;
+    }
+
+    public void LeaveWeb(float multiplier)
+    {
+        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * 1 / multiplier, rb.velocity.z);
+        moveSpeed *= 1 / multiplier;
+	}
+
 }
