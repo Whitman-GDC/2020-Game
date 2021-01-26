@@ -24,13 +24,12 @@ public class TakeSteps : MonoBehaviour
     {
         //This is the best way I found to smoothly move the base of the leg to the target. Transform.Translate is too fast.
         if((Math.Abs((target.position-transform.position).magnitude) >= stepLength) && !takingStep) {
-            takingStep = true; 
-            nextTarget = target.position;
+            StartStep();
         }
 
         if(takingStep) {
             float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+            transform.position = Vector3.MoveTowards(transform.position, nextTarget, step);
         }
 
         if(takingStep && Math.Abs((transform.position-nextTarget).magnitude) <=marginOfError)
@@ -39,5 +38,14 @@ public class TakeSteps : MonoBehaviour
         }
 
         Debug.Log(takingStep);
+    }
+
+    void StartStep()
+    {
+        if(!takingStep)
+        {
+            takingStep = true;
+            nextTarget = target.position;
+        }
     }
 }
