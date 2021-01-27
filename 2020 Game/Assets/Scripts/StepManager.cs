@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TakeSteps : MonoBehaviour
+public class StepManager : MonoBehaviour
 {
     public Transform target;
     public float stepLength;
@@ -17,16 +17,12 @@ public class TakeSteps : MonoBehaviour
     void Start()
     {
         transform = GetComponent<Transform>();
-        nextTarget = transform.position;
+        transform.position = target.position;
     }
 
     void Update()
     {
         //This is the best way I found to smoothly move the base of the leg to the target. Transform.Translate is too fast.
-        if((Math.Abs((target.position-transform.position).magnitude) >= stepLength) && !takingStep) {
-            StartStep();
-        }
-
         if(takingStep) {
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, nextTarget, step);
@@ -36,16 +32,35 @@ public class TakeSteps : MonoBehaviour
         {
             takingStep = false;
         }
-
-        Debug.Log(takingStep);
     }
 
-    void StartStep()
+    //Move the base of the leg to the target
+    public void StartStep()
     {
         if(!takingStep)
         {
             takingStep = true;
             nextTarget = target.position;
         }
+    }
+    
+    public Vector3 getPosition()
+    {
+        return transform.position;
+    }
+
+    public void setPosition(Vector3 newPosition)
+    {
+        transform.position = newPosition;
+    }
+
+    public Vector3 getTargetPosition()
+    {
+        return target.position;
+    }
+
+    public bool getTakingStep()
+    {
+        return takingStep;
     }
 }
