@@ -14,9 +14,14 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
     private new CapsuleCollider collider;
-
-    private void Start()
+    void speedIncrease()
     {
+        moveSpeed=moveSpeed+1f;
+
+    }
+private void Start()
+    {
+    InvokeRepeating("speedIncrease", 5f, 10f);
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
     }
@@ -52,8 +57,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool IsGrounded()
-	{
+    {
         return Physics.CheckCapsule(collider.bounds.center, new Vector3(collider.bounds.center.x,
             collider.bounds.min.y, collider.bounds.center.z), collider.radius * 0.9f, groundMask);
-	}
+    }
+   
 }
