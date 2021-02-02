@@ -472,6 +472,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1135275534210322190, guid: 130b445a72018445ca99e1c9a0650afc, type: 3}
   m_PrefabInstance: {fileID: 777503732}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &956834532 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 1534132239869378172, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
+  m_PrefabInstance: {fileID: 1534132240117415337}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1110174329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1135275534210322190, guid: 130b445a72018445ca99e1c9a0650afc, type: 3}
@@ -756,6 +761,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1534132239869378171, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c6bf8e7f3038e4f1bab3133640295b4a, type: 2}
+    - target: {fileID: 1534132239869378171, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 3730945bcb0ca44b395ce26e40e88001, type: 3}
+    - target: {fileID: 1534132239869378175, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
+      propertyPath: jumpForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534132240364392146, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
+      propertyPath: mouseSensitivity
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 1534132240364392147, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
       propertyPath: environment
       value: 
@@ -763,6 +784,10 @@ PrefabInstance:
     - target: {fileID: 1840631896608534619, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
       propertyPath: m_Name
       value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1840631896608534619, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
@@ -780,7 +805,7 @@ PrefabInstance:
     - target: {fileID: 4729171128528385909, guid: 5a478fd0063c147bda964ea4c429fa6d, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 956834532}
     - target: {fileID: 4729171128528385909, guid: 5a478fd0063c147bda964ea4c429fa6d, type: 3}
       propertyPath: speedMultiplier
       value: 0.3
@@ -831,15 +856,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6683436333745901992, guid: 5a478fd0063c147bda964ea4c429fa6d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6683436333745901992, guid: 5a478fd0063c147bda964ea4c429fa6d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6683436333745901992, guid: 5a478fd0063c147bda964ea4c429fa6d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a478fd0063c147bda964ea4c429fa6d, type: 3}
