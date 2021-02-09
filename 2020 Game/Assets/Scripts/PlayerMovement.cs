@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private Animator myAnimationController;
+
     private Rigidbody rb;
 
     public float moveSpeed = 12f;
@@ -13,17 +15,18 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 7f;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    private new CapsuleCollider collider;
+    private new BoxCollider collider;
+    
     void speedIncrease()
     {
         moveSpeed=moveSpeed+1f;
-
     }
+    
 private void Start()
     {
     InvokeRepeating("speedIncrease", 5f, 10f);
         rb = GetComponent<Rigidbody>();
-        collider = GetComponent<CapsuleCollider>();
+        collider = GetComponent<BoxCollider>();
     }
 
     void Update()
@@ -47,19 +50,39 @@ private void Start()
         Vector3 move = transform.right * movementX + transform.forward * movementZ;
         Vector3 newMove = new Vector3(move.x, rb.velocity.y, move.z);
 
+        if (newMove.x != 0 || newMove.z != 0)
+		{
+            myAnimationController.SetBool("Running", true);
+		} else
+		{
+            myAnimationController.SetBool("Running", false);
+        }
+
+        rb.velocity = newMove;
+
         //jumping
         if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
-        rb.velocity = newMove;
     }
 
     private bool IsGrounded()
     {
         return Physics.CheckCapsule(collider.bounds.center, new Vector3(collider.bounds.center.x,
-            collider.bounds.min.y, collider.bounds.center.z), collider.radius * 0.9f, groundMask);
+            collider.bounds.min.y, collider.bounds.center.z), collider.size.z * 0.9f, groundMask);
+	}
+
+    public void CaughtInWeb(float multiplier)
+    {
+        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * multiplier, rb.velocity.z);
+        moveSpeed *= multiplier;
     }
-   
+
+    public void LeaveWeb(float multiplier)
+    {
+        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * 1 / multiplier, rb.velocity.z);
+        moveSpeed *= 1 / multiplier;
+	}
 }
