@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private Animator myAnimationController;
+
     private Rigidbody rb;
 
     public float moveSpeed = 12f;
@@ -41,6 +43,14 @@ public class PlayerMovement : MonoBehaviour
         //movement
         Vector3 move = transform.right * movementX + transform.forward * movementZ;
         Vector3 newMove = new Vector3(move.x, rb.velocity.y, move.z);
+
+        if (newMove.x != 0 || newMove.z != 0)
+		{
+            myAnimationController.SetBool("Running", true);
+		} else
+		{
+            myAnimationController.SetBool("Running", false);
+        }
 
         rb.velocity = newMove;
 
