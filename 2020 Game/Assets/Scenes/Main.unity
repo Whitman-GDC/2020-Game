@@ -615,11 +615,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!95 &1997298510 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1534132239869378171, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
-  m_PrefabInstance: {fileID: 1534132240117415337}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2002986311
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,38 +761,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1534132239869378171, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 9e4b25305f6c8486bac4c09c0e5fc02a, type: 2}
-    - target: {fileID: 1534132239869378171, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: 3730945bcb0ca44b395ce26e40e88001, type: 3}
-    - target: {fileID: 1534132239869378171, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
-      propertyPath: m_WarningMessage
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1534132239869378175, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
-      propertyPath: jumpForce
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1534132239869378175, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
-      propertyPath: myAnimationController
-      value: 
-      objectReference: {fileID: 1997298510}
-    - target: {fileID: 1534132240364392145, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1534132240364392145, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.289
-      objectReference: {fileID: 0}
-    - target: {fileID: 1534132240364392146, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
-      propertyPath: mouseSensitivity
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 1534132240364392147, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
       propertyPath: environment
       value: 
@@ -805,10 +768,6 @@ PrefabInstance:
     - target: {fileID: 1840631896608534619, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
       propertyPath: m_Name
       value: player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1840631896608534619, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
-      propertyPath: m_TagString
-      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a99a3a3e933c34324a22684857fa37bc, type: 3}
