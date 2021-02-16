@@ -10,6 +10,8 @@ public class RoomLoader : MonoBehaviour
  
     void Awake() 
     {
+        //Random.InitState(42);
+
         /*  
         Uses empty child objects as anchor points.
         */
@@ -46,9 +48,14 @@ public class RoomLoader : MonoBehaviour
         Vector3 nextRoomLocation = previousEnd.position;
         if(rotation != nextRoom.GetComponent<Transform>().rotation.eulerAngles.y) 
         {
+            // nextRoomLocation += GetRotatedCoordinates(rotation, nextStart.position);
+            Vector3 rotatedCoords = GetRotatedCoordinates(rotation, nextStart.position);
+            nextRoomLocation -= rotatedCoords;
+            
+            
             Debug.Log(previousEnd.position + " " + nextStart.position);
-            nextRoomLocation += GetRotatedCoordinates(rotation, nextStart.position);
-            Debug.Log(GetRotatedCoordinates(rotation, nextStart.position));
+            Debug.Log(rotatedCoords);
+            Debug.Log(previousEnd.rotation.eulerAngles.y + " " + nextStart.rotation.eulerAngles.y);
         } 
         else 
         {
@@ -62,11 +69,10 @@ public class RoomLoader : MonoBehaviour
     
     private Vector3 GetRotatedCoordinates(float deg, Vector3 position)
     {
-        float rad = deg * Mathf.Deg2Rad;
-        // return new Vector3(position.x * Mathf.Sin(rad) + (-position.z) * Mathf.Cos(rad), 0, 
-        // (position.x * Mathf.Cos(rad) - (-position.z) * Mathf.Sin(rad)) * -1);
-        return new Vector3((-position.z) * Mathf.Sin(rad) + position.x * Mathf.Cos(rad), 0, 
-        -1 * ((-position.z) * Mathf.Cos(rad) - position.x * Mathf.Sin(rad)));
+        float rad = -deg * Mathf.Deg2Rad;
+        float new_z = -1 * ((-position.z) * Mathf.Cos(rad) - position.x * Mathf.Sin(rad));
+        float new_x = (-position.z) * Mathf.Sin(rad) + position.x * Mathf.Cos(rad);
+        return new Vector3(new_x, 0, new_z);
         // x' = x * Mathf.Cos(rad) - y * Mathf.Sin(rad);
         // y' = x * Mathf.Sin(rad) + y * Mathf.Cos(rad);
     }
