@@ -21,19 +21,13 @@ public class SpiderModeSwitch : MonoBehaviour {
     public Camera npcCam;
 
     void Start() {
-        controllerCam.enabled = false;
-        npcCam.enabled = true;
-        spiderController.enabled = false;
-        spiderNPC.enabled = true;
- 
-        /*//Start with spider camera enabled
+        //Start with spider camera enabled
         if (controllerCam.enabled && npcCam.enabled) npcCam.enabled = false;
         if (!controllerCam.enabled && !npcCam.enabled) controllerCam.enabled = true;
 
         // Start with spider controller enabled
         if (spiderController.enabled && spiderNPC.enabled) spiderNPC.enabled = false;
         if (!spiderController.enabled && !spiderNPC.enabled) spiderController.enabled = true;
-        */
     }
     void Update() {
 
