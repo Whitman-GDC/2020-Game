@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Animator myAnimationController;
+    //[SerializeField] private Animator myAnimationController;
 
     private Rigidbody rb;
 
@@ -50,13 +50,13 @@ private void Start()
         Vector3 move = transform.right * movementX + transform.forward * movementZ;
         Vector3 newMove = new Vector3(move.x, rb.velocity.y, move.z);
 
-        if (newMove.x != 0 || newMove.z != 0)
+        /*if (newMove.x != 0 || newMove.z != 0)
 		{
             myAnimationController.SetBool("Running", true);
 		} else
 		{
             myAnimationController.SetBool("Running", false);
-        }
+        }*/
 
         rb.velocity = newMove;
 
